@@ -13,4 +13,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+// POST /characters
+router.post('/', async (req, res) => {
+  try {
+    const character = new Character(req.body);
+    const saved = await character.save();
+    res.status(201).json(saved);
+  } catch (err) {
+    res.status(400).json({ message: 'Erro ao criar personagem' });
+  }
+});
+
 export default router;

@@ -1,15 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-const characterSchema = new mongoose.Schema({
+export interface ICharacter extends Document {
+  name: string;
+  village: string;
+  chakra: number;
+  rank: string;
+  abilities: string[];
+}
+
+const characterSchema = new Schema<ICharacter>({
   name: { type: String, required: true },
-  clan: { type: String },
-  village: { type: String },
-  rank: { type: String },
-  jutsus: [{ type: String }],
-  description: { type: String },
-  image: { type: String },
-}, {
-  timestamps: true,
+  village: { type: String, required: true },
+  chakra: { type: Number, required: true },
+  rank: { type: String, required: true },
+  abilities: { type: [String], required: true },
 });
 
-export const Character = mongoose.model('Character', characterSchema);
+export const Character = mongoose.model<ICharacter>('Character', characterSchema);
